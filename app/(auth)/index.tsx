@@ -7,13 +7,11 @@ export default function () {
     return (
         <TailwindProvider platform="android">
             <View className='flex-1 items-center justify-center bg-white'>
-                <Text className='text-black font-bold text-3xl'>Login</Text>
-                <Link href="/(tabs)">This is a button</Link>
                 <TouchableOpacity
-                  className="bg-black p-4 rounded-lg"
+                  className="bg-black px-4 py-2 rounded-lg"
                   onPress={() => router.push('/(tabs)')}
                 >
-                    <Text className="text-white font-bold text-lg">This is a button</Text>
+                    <Text className="text-white font-bold text-lg">Login</Text>
                 </TouchableOpacity>
             </View>
         </TailwindProvider>
