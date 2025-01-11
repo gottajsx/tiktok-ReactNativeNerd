@@ -38,4 +38,18 @@ EXPO_PUBLIC_SUPABASE_ANON_KEY=
 DATABASE_URL=
 DIRECT_URL=
 ```
+## PRISMA setup
 
+1. PRISMA installation
+
+```bash
+npm install prisma --save-dev
+```
+
+2. PRISMA setup
+```bash
+npx prisma init --datasource-provider postgresql
+npx prisma db pull
+npx prisma generate
+npx prisma db push
+```
