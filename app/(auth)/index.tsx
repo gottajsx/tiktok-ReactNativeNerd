@@ -2,6 +2,7 @@ import React from 'react';
 import { TailwindProvider } from 'tailwindcss-react-native';
 import { Text, View, TouchableOpacity, TextInput } from 'react-native';
 import { Link, useRouter } from 'expo-router';
+import { supabase } from '@/utils/supabase'
 
 
 
@@ -10,8 +11,13 @@ export default function () {
     const [email, setEmail] = React.useState('')
     const [password, setPassword] = React.useState('')
 
-    const handleLogin = () => {
-      console.log(email, password);
+    const handleLogin = async () => {
+      const { data, error } = await supabase.auth.signInWithPassword({
+        email: email,
+        password: password
+      });
+      if (error) return console.error(error);
+      router.push('/(tabs)')
     }
     
     return (
