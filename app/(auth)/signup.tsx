@@ -1,32 +1,15 @@
 import React from 'react';
 import { TailwindProvider } from 'tailwindcss-react-native';
 import { Text, View, TouchableOpacity, TextInput } from 'react-native';
-import { Link, useRouter } from 'expo-router';
-import { supabase } from '@/utils/supabase'; 
+import { useRouter } from 'expo-router';
+import { useAuth } from '@/providers/AuthProvider'
 
 export default function () {
     const router = useRouter();
-    const [email, setEmail] = React.useState('')
-    const [password, setPassword] = React.useState('')
-    const [username, setUsername] = React.useState('')
-
-    const  handleSignup = async () => {
-      console.log(email, password);
-      const { data, error } = await supabase.auth.signUp({
-        email: email,
-        password: password,
-      });
-      if (error) return console.error(data, error);
-
-      const {data: userData, error: userError} = await supabase.from('User').insert({
-        id: data.user.id,
-        username: username,
-        email: email,
-      });
-      if (userError) return console.error(userError);
-      router.back()
-      router.push('/(tabs)');
-    }
+    const [email, setEmail] = React.useState('');
+    const [password, setPassword] = React.useState('');
+    const [username, setUsername] = React.useState('');
+    const { signUp } = useAuth();
     
     return (
         <TailwindProvider platform="android">
@@ -54,7 +37,7 @@ export default function () {
                     />
                     <TouchableOpacity
                       className="bg-black px-4 py-2 rounded-lg"
-                      onPress={handleSignup}
+                      onPress={ () => signUp(username, email, password)}
                     >
                         <Text className="text-white font-bold text-lg text-center">Signup</Text>
                     </TouchableOpacity>

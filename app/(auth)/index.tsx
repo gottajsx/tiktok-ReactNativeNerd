@@ -2,23 +2,17 @@ import React from 'react';
 import { TailwindProvider } from 'tailwindcss-react-native';
 import { Text, View, TouchableOpacity, TextInput } from 'react-native';
 import { Link, useRouter } from 'expo-router';
-import { supabase } from '@/utils/supabase'
+import { supabase } from '@/utils/supabase';
+import { useAuth } from '@/providers/AuthProvider';
+
 
 
 
 export default function () {
     const router = useRouter();
-    const [email, setEmail] = React.useState('')
-    const [password, setPassword] = React.useState('')
-
-    const handleLogin = async () => {
-      const { data, error } = await supabase.auth.signInWithPassword({
-        email: email,
-        password: password
-      });
-      if (error) return console.error(error);
-      router.push('/(tabs)')
-    }
+    const [email, setEmail] = React.useState('');
+    const [password, setPassword] = React.useState('');
+    const { signIn } = useAuth();
     
     return (
         <TailwindProvider platform="android">
@@ -40,7 +34,7 @@ export default function () {
                     />
                     <TouchableOpacity
                       className="bg-black px-4 py-2 rounded-lg"
-                      onPress={handleLogin}
+                      onPress={ ( )=> signIn(email, password)}
                     >
                         <Text className="text-white font-bold text-lg text-center">Login</Text>     
                     </TouchableOpacity>
