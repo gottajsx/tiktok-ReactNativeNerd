@@ -22,7 +22,7 @@ export const AuthProvider = ({ children}: {children: React.ReactNode }) => {
         setUser(data);
         console.log(data);
         router.push('/(tabs)');
-    }
+    };
 
     const signIn = async (email: string, password: string) => {
         const { data, error } = await supabase.auth.signInWithPassword({
@@ -49,14 +49,25 @@ export const AuthProvider = ({ children}: {children: React.ReactNode }) => {
         getUser(data?.user?.id);
         router.back();
         router.push('/(tabs)');
-    }
+    };
 
     const signOut = async () => {
         const { error } = await supabase.auth.signOut();
         if(error) return console.error(error);
         setUser(null);
         router.push('/(auth)');
-    }
+    };
+
+    React.useEffect(() => {
+        const { data: authData } = supabase.auth.onAuthStateChange((event, session) => {
+            if(!session) return router.push('/(auth)');
+
+            getUser(session?.user?.id);
+        });
+        return () => {
+            authData.subscription.unsubscribe();
+        };
+    }, []);
 
     return <AuthContext.Provider value={{ user, signIn, signUp, signOut }}>{children}</AuthContext.Provider>
 }
