@@ -53,3 +53,21 @@ npx prisma db pull
 npx prisma generate
 npx prisma db push
 ```
+
+## Expo CAMERA
+
+1. Installation
+
+```bash
+npx expo install expo-camera
+```
+
+In `app.json`, add the following:
+```json
+"expo-camera",
+        {
+          "cameraPermission": "Allow $(PRODUCT_NAME) to access your camera",
+          "microphonePermission": "Allow $(PRODUCT_NAME) to access your microphone",
+          "recordAudioAndroid": true
+        }```json
+```
